@@ -8,7 +8,6 @@ import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {DatePipe} from "@angular/common";
 import {ToastModule} from "primeng/toast";
 import {HttpErrorResponse} from "@angular/common/http";
-import {TodoEditDialogComponent} from "../../../todo-list/todo-edit-dialog/todo-edit-dialog.component";
 import {TodoItemModel} from "../../../shared/models/todo-item.model";
 import {CategoriesEditDialogComponent} from "../../categories-edit-dialog/categories-edit-dialog.component";
 
