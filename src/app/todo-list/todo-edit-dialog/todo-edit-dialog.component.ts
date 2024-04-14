@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {InputTextModule} from "primeng/inputtext";
-import {FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
+import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {InputTextareaModule} from "primeng/inputtextarea";
 import {CalendarModule} from "primeng/calendar";
 import {AutoCompleteCompleteEvent, AutoCompleteModule} from "primeng/autocomplete";
@@ -51,10 +51,10 @@ export class TodoEditDialogComponent implements OnInit {
 
   initializeForm() {
     this.todoForm = new FormGroup({
-      name: new FormControl(''),
+      name: new FormControl('', [Validators.required]),
       description: new FormControl(''),
-      deadline: new FormControl(''),
-      categoryName: new FormControl(''),
+      deadline: new FormControl('', [Validators.required]),
+      categoryName: new FormControl('', [Validators.required]),
     });
 
     if (this.editTodoItem) {
@@ -80,53 +80,55 @@ export class TodoEditDialogComponent implements OnInit {
   }
 
   saveTodo() {
-    if (this.editTodoItem) {
-      const formValue = this.todoForm?.getRawValue();
-      const editData: TodoItemModel = {
-        ...this.editTodoItem,
-        name: formValue.name,
-        description: formValue.description,
-        deadline: formValue.deadline,
-        category: {
-          ...this.editTodoItem.category,
-          name: formValue.categoryName
+    if (this.todoForm?.valid) {
+      if (this.editTodoItem) {
+        const formValue = this.todoForm.getRawValue();
+        const editData: TodoItemModel = {
+          ...this.editTodoItem,
+          name: formValue.name,
+          description: formValue.description,
+          deadline: formValue.deadline,
+          category: {
+            ...this.editTodoItem.category,
+            name: formValue.categoryName
+          }
         }
-      }
-      // edit mode, we call the edit method
-      this.saving = true;
-      this.todoItemsService.editTodoItem(editData).subscribe({
-        next: (savedTodoItem: TodoItemModel) => {
-          this.saving = false;
-          this.dialogRef.close(savedTodoItem);
-        },
-        error: (err: HttpErrorResponse) => {
-          this.saving = false;
-        }
-      });
-    } else {
-      // save new mode, we call the create method
-      const formValue = this.todoForm?.getRawValue();
-      const createTodoData: TodoItemModel = {
-        id: 0,
-        name: formValue.name,
-        description: formValue.description,
-        deadline: formValue.deadline,
-        category: {
+        // edit mode, we call the edit method
+        this.saving = true;
+        this.todoItemsService.editTodoItem(editData).subscribe({
+          next: (savedTodoItem: TodoItemModel) => {
+            this.saving = false;
+            this.dialogRef.close(savedTodoItem);
+          },
+          error: (err: HttpErrorResponse) => {
+            this.saving = false;
+          }
+        });
+      } else {
+        // save new mode, we call the create method
+        const formValue = this.todoForm.getRawValue();
+        const createTodoData: TodoItemModel = {
           id: 0,
-          name: formValue.categoryName,
-          description: ''
-        }
-      };
-      this.saving = true;
-      this.todoItemsService.createTodoItem(createTodoData).subscribe({
-        next: (savedTodoItem: TodoItemModel) => {
-          this.saving = false;
-          this.dialogRef.close(savedTodoItem);
-        },
-        error: (err: HttpErrorResponse) => {
-          this.saving = false;
-        }
-      });
+          name: formValue.name,
+          description: formValue.description,
+          deadline: formValue.deadline,
+          category: {
+            id: 0,
+            name: formValue.categoryName,
+            description: ''
+          }
+        };
+        this.saving = true;
+        this.todoItemsService.createTodoItem(createTodoData).subscribe({
+          next: (savedTodoItem: TodoItemModel) => {
+            this.saving = false;
+            this.dialogRef.close(savedTodoItem);
+          },
+          error: (err: HttpErrorResponse) => {
+            this.saving = false;
+          }
+        });
+      }
     }
   }
 }
