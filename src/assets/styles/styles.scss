@@ -1,0 +1,8 @@
+/* You can add global styles to this file, and also import other style files */
+
+// check 7-1 pattern https://dev.to/dostonnabotov/a-modern-sass-folder-structure-330f
+
+@use "abstracts";
+@use "base";
+
+@import "primeicons/primeicons.css";
