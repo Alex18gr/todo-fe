@@ -28,6 +28,7 @@ export class TodoItemsListComponent implements OnInit {
   rows: number = 5;
   totalElements: number = 0;
   todoItems: TodoItemModel[] = [];
+  page: number = 0;
 
   constructor(
     private todoItemsService: TodoItemsService,
@@ -40,6 +41,10 @@ export class TodoItemsListComponent implements OnInit {
 
   reloadItems(): void {
     this.loadTodoItems(0, this.rows);
+  }
+
+  reloadItemsCurrentPage() {
+    this.loadTodoItems(this.page, this.rows);
   }
 
   onPageChange(event: PaginatorState) {
@@ -55,6 +60,7 @@ export class TodoItemsListComponent implements OnInit {
             this.rows = res.size;
             this.todoItems = res.content;
             this.totalElements = res.totalElements;
+            this.page = res.number;
             this.loading = false;
           },
           error: (next: TodoItemModel) => {
@@ -67,5 +73,15 @@ export class TodoItemsListComponent implements OnInit {
   itemDeleted(item: TodoItemModel) {
     this.reloadItems();
     this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'Record deleted' });
+  }
+
+  itemModified(item: TodoItemModel) {
+    this.reloadItemsCurrentPage();
+    this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'Record modified' });
+  }
+
+  itemCreated(item: TodoItemModel) {
+    this.reloadItems();
+    this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'Record created' });
   }
 }

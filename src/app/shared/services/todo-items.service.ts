@@ -24,4 +24,12 @@ export class TodoItemsService {
     return this.http.delete<void>(this.apiUrl + 'tasks/' + id);
   }
 
+  createTodoItem(newTodoItem: TodoItemModel): Observable<TodoItemModel> {
+    return this.http.post<TodoItemModel>(this.apiUrl + 'tasks', newTodoItem)
+  }
+
+  editTodoItem(editTodoItem: TodoItemModel): Observable<TodoItemModel> {
+    return this.http.put<TodoItemModel>(this.apiUrl + 'tasks/' + editTodoItem.id, editTodoItem)
+  }
+
 }

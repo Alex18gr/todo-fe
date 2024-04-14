@@ -7,6 +7,8 @@ import {ConfirmationService, MessageService} from "primeng/api";
 import {ToastModule} from "primeng/toast";
 import {TodoItemsService} from "../../../shared/services/todo-items.service";
 import {HttpErrorResponse} from "@angular/common/http";
+import {DialogService} from "primeng/dynamicdialog";
+import {TodoEditDialogComponent} from "../../todo-edit-dialog/todo-edit-dialog.component";
 
 @Component({
   selector: 'app-todo-item',
@@ -17,12 +19,13 @@ import {HttpErrorResponse} from "@angular/common/http";
     ConfirmDialogModule,
     ToastModule,
   ],
-  providers: [ConfirmationService, MessageService],
+  providers: [ConfirmationService, MessageService, DialogService],
   templateUrl: './todo-item.component.html',
   styleUrl: './todo-item.component.scss'
 })
 export class TodoItemComponent {
   @Output() todoDeleted: EventEmitter<void> = new EventEmitter<void>();
+  @Output() todoModified: EventEmitter<TodoItemModel> = new EventEmitter<TodoItemModel>();
   @Input() todoItem!: TodoItemModel;
 
   loading: boolean = false;
@@ -30,7 +33,8 @@ export class TodoItemComponent {
   constructor(
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
-    private todoItemsService: TodoItemsService
+    private todoItemsService: TodoItemsService,
+    private dialogService: DialogService
   ) {}
 
   deletePrompt() {
@@ -60,4 +64,24 @@ export class TodoItemComponent {
       }
     })
   }
+
+  editItem() {
+    const ref = this.dialogService.open(TodoEditDialogComponent, {
+      header: 'Edit TODO Item',
+      width: '60vw',
+      data: {
+        editTodoItem: this.todoItem
+      }
+    });
+
+    ref.onClose.subscribe({
+      next: (v: TodoItemModel) => {
+        if (v) {
+          this.todoModified.emit(v);
+        }
+      }
+    })
+  }
+
+
 }
