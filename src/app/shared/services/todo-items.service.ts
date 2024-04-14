@@ -20,4 +20,8 @@ export class TodoItemsService {
     return this.http.get<PageModel<TodoItemModel>>(this.apiUrl + 'tasks');
   }
 
+  deleteTodoItem(id: number): Observable<void> {
+    return this.http.delete<void>(this.apiUrl + 'tasks/' + id);
+  }
+
 }

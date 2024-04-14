@@ -1,14 +1,63 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {TodoItemModel} from "../../../shared/models/todo-item.model";
+import {DatePipe} from "@angular/common";
+import {ButtonModule} from "primeng/button";
+import {ConfirmDialogModule} from "primeng/confirmdialog";
+import {ConfirmationService, MessageService} from "primeng/api";
+import {ToastModule} from "primeng/toast";
+import {TodoItemsService} from "../../../shared/services/todo-items.service";
+import {HttpErrorResponse} from "@angular/common/http";
 
 @Component({
   selector: 'app-todo-item',
   standalone: true,
-  imports: [],
+  imports: [
+    DatePipe,
+    ButtonModule,
+    ConfirmDialogModule,
+    ToastModule,
+  ],
+  providers: [ConfirmationService, MessageService],
   templateUrl: './todo-item.component.html',
   styleUrl: './todo-item.component.scss'
 })
 export class TodoItemComponent {
+  @Output() todoDeleted: EventEmitter<void> = new EventEmitter<void>();
   @Input() todoItem!: TodoItemModel;
 
+  loading: boolean = false;
+
+  constructor(
+    private confirmationService: ConfirmationService,
+    private messageService: MessageService,
+    private todoItemsService: TodoItemsService
+  ) {}
+
+  deletePrompt() {
+    this.confirmationService.confirm({
+      message: 'Do you want to delete todo item "' + this.todoItem.name + '"?',
+      header: 'Delete Confirmation',
+      icon: 'pi pi-exclamation-triangle',
+      acceptButtonStyleClass:"p-button-danger p-button-text",
+      rejectButtonStyleClass:"p-button-text p-button-text",
+
+      accept: () => {
+        this.deleteTodo();
+      },
+    });
+  }
+
+  deleteTodo() {
+    this.loading = true;
+    this.todoItemsService.deleteTodoItem(this.todoItem.id).subscribe({
+      next: () => {
+        this.todoDeleted.emit();
+        this.loading = false;
+      },
+      error: (err: HttpErrorResponse) => {
+        this.messageService.add({ severity: 'danger', summary: 'Error', detail: 'Error while deleting todo item' });
+        this.loading = false;
+      }
+    })
+  }
 }
