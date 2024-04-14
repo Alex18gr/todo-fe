@@ -56,7 +56,7 @@ export class TodoItemsListComponent implements OnInit {
         this.loading = true;
         this.todoItemsService.getTodoItems(page, size).subscribe({
           next: (res: PageModel<TodoItemModel>) => {
-            this.first = res.number * res.numberOfElements;
+            this.first = (res.number * res.size) + 1;
             this.rows = res.size;
             this.todoItems = res.content;
             this.totalElements = res.totalElements;

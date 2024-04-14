@@ -1,3 +1,13 @@
-<h2>
-  TODO Categories
-</h2>
+<div class="p-4 py-2 surface-400">
+  <h2>
+    TODO Categories
+  </h2>
+</div>
+<div class="todo-list-container mx-auto w-full p-4 border-1">
+  <div class="w-full p-2">
+    <p-button label="Create" (onClick)="openCreateDialog()"></p-button>
+  </div>
+  <div class="p-2">
+    <app-categories-list #categoriesList></app-categories-list>
+  </div>
+</div>

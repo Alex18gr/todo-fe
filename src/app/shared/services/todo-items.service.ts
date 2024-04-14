@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {TodoItemModel} from "../models/todo-item.model";
 import {PageModel} from "../models/page.model";
@@ -17,7 +17,8 @@ export class TodoItemsService {
   ) { }
 
   getTodoItems(page: number, size: number): Observable<PageModel<TodoItemModel>> {
-    return this.http.get<PageModel<TodoItemModel>>(this.apiUrl + 'tasks');
+    const params = new HttpParams().set('page', page).set('size', size);
+    return this.http.get<PageModel<TodoItemModel>>(this.apiUrl + 'tasks', { params: params });
   }
 
   deleteTodoItem(id: number): Observable<void> {

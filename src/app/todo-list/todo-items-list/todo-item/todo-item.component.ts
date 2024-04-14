@@ -80,7 +80,7 @@ export class TodoItemComponent {
           this.todoModified.emit(v);
         }
       }
-    })
+    });
   }
 
 

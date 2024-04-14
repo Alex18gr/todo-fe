@@ -1,0 +1,8 @@
+<div class="flex flex-column gap-3">
+  <app-categories-list-item *ngFor="let item of categories" [category]="item" (categoryDeleted)="categoryDeleted(item)" (categoryModified)="categoryModified($event)"></app-categories-list-item>
+</div>
+<div class="pt-2">
+  <p-paginator (onPageChange)="onPageChange($event)" [first]="first" [rows]="rows" [totalRecords]="totalElements"></p-paginator>
+</div>
+
+<p-toast></p-toast>

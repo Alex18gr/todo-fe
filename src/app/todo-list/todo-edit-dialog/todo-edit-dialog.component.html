@@ -1,6 +1,6 @@
 <form *ngIf="todoForm" [formGroup]="todoForm" class="flex flex-column gap-2 w-full">
   <div class="flex flex-column gap-2">
-    <label for="name">Name</label>
+    <label for="name">Name<span class="text-red-600">*</span></label>
     <input pInputText id="name" aria-describedby="username-help" formControlName="name" />
   </div>
   <div class="flex flex-column gap-2">
@@ -8,11 +8,11 @@
     <textarea id="description" rows="5" cols="30" pInputTextarea formControlName="description" class="max-w-full min-w-full"></textarea>
   </div>
   <div class="flex flex-column gap-2">
-    <label htmlFor="deadline">Deadline</label>
+    <label htmlFor="deadline">Deadline<span class="text-red-600">*</span></label>
     <p-calendar inputStyleClass="w-full" styleClass="w-full" inputId="deadline" formControlName="deadline" appendTo="body"></p-calendar>
   </div>
   <div class="flex flex-column gap-2">
-    <label htmlFor="category">Category</label>
+    <label htmlFor="category">Category<span class="text-red-600">*</span></label>
     <p-autoComplete formControlName="categoryName" inputId="category" styleClass="w-full" inputStyleClass="w-full" [suggestions]="suggestions" (completeMethod)="searchCategory($event)" appendTo="body"></p-autoComplete>
   </div>
   <div class="pt-2 flex justify-content-end gap-2">

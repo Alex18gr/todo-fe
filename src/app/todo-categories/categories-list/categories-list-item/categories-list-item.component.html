@@ -1,0 +1,13 @@
+<div class="border-gray-400 shadow-2 p-3 flex justify-content-between">
+  <div>
+    <div>{{ category.name }}</div>
+    <div>{{ category.description }}</div>
+  </div>
+  <div class="flex gap-2">
+    <p-button icon="pi pi-pencil" [disabled]="loading" (onClick)="editItem()"></p-button>
+    <p-button icon="pi pi-trash" severity="danger" [outlined]="true" (onClick)="deletePrompt()" [loading]="loading"></p-button>
+  </div>
+</div>
+
+<p-confirmDialog></p-confirmDialog>
+<p-toast></p-toast>

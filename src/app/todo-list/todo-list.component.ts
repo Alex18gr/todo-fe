@@ -40,7 +40,7 @@ export class TodoListComponent {
           this.itemsListComponent.itemCreated(v);
         }
       }
-    })
+    });
   }
 
 
