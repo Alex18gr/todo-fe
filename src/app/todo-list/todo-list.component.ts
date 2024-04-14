@@ -2,7 +2,6 @@ import {Component, ViewChild} from '@angular/core';
 import {ButtonModule} from "primeng/button";
 import {TodoItemComponent} from "./todo-items-list/todo-item/todo-item.component";
 import {TodoItemsListComponent} from "./todo-items-list/todo-items-list.component";
-import {TodoItemsService} from "../shared/services/todo-items.service";
 import {DialogService} from "primeng/dynamicdialog";
 import {TodoEditDialogComponent} from "./todo-edit-dialog/todo-edit-dialog.component";
 import {TodoItemModel} from "../shared/models/todo-item.model";
