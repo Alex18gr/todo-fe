@@ -1,0 +1,12 @@
+.nav-item {
+  color: var(--gray-50);
+  &:hover {
+    color: var(--gray-400);
+  }
+  &:active {
+    color: var(--gray-200);
+  }
+  &.is-active {
+    font-weight: bold;
+  }
+}

@@ -1,0 +1,11 @@
+<nav class="navbar p-3 flex align-items-center">
+  <div class="flex align-items-center">
+    <div class="navbar-brand font-bold cursor-pointer p-3 pl-0 text-gray-200">
+      TODO App
+    </div>
+    <i class="pi pi-list"></i>
+    <div class="flex align-items-center pl-3 gap-3">
+      <app-nav-item *ngFor="let item of navItems" [navItemData]="item"  ></app-nav-item>
+    </div>
+  </div>
+</nav>

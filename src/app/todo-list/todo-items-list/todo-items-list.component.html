@@ -1,0 +1,6 @@
+<div class="flex flex-column gap-3">
+  <app-todo-item *ngFor="let item of todoItems" [todoItem]="item"></app-todo-item>
+</div>
+<div class="pt-2">
+  <p-paginator (onPageChange)="onPageChange($event)" [first]="first" [rows]="rows" [totalRecords]="120" [rowsPerPageOptions]="[10, 20, 30]"></p-paginator>
+</div>

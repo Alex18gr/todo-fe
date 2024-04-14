@@ -1,0 +1,32 @@
+.todo-list-container {
+  margin-top: 80px;
+  width: 100%;
+  max-width: 97vw;
+}
+
+@media only screen and (min-width: 1000px) {
+  /* For mobile phones: */
+  .todo-list-container {
+    max-width: 850px
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  /* For mobile phones: */
+  .todo-list-container {
+    max-width: 950px
+  }
+}
+
+@media only screen and (min-width: 1400px) {
+  .todo-list-container {
+    max-width: 1000px
+  }
+}
+
+@media only screen and (min-width: 1600px) {
+  .todo-list-container {
+    max-width: 1200px
+  }
+}
+

@@ -1,0 +1,10 @@
+.navbar {
+  height: var(--navbar-height);
+  border-bottom: 1px solid black;
+  overflow: hidden;
+  background-color: var(--blue-600);
+  color: var(--gray-50);
+  position: fixed; /* Set the navbar to fixed position */
+  top: 0; /* Position the navbar at the top of the page */
+  width: 100%; /* Full width */
+}
